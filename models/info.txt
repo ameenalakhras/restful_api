@@ -1,0 +1,1 @@
+the models are the files which the resources and other files uses but doesn't interact directly with the api but they just get called when needed.

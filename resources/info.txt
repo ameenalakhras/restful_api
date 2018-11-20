@@ -1,0 +1,1 @@
+the resources are the files which interact with the API directly. e.g. get,post,delete,put 

@@ -12,6 +12,10 @@ class Item(Resource):
     type=float,
     required=True,
     help="this field can't be left blank")
+    parser.add_argument('store_id',
+    type=int,
+    required=True,
+    help="an item without a store can't be made!")
 
 
     @jwt_required() # getting an item requires the authentication key
@@ -30,12 +34,13 @@ class Item(Resource):
 
         #calling the RequestParser to get the json
         data = Item.parser.parse_args()
-        item = {'name':name,'price':data['price']}
+        item = {'name':name,'price':data['price'],'store_id':data["store_id"]}
+        item =ItemModel(**item)
 
         try :
             item.save_to_db()
         except :
-            return {"message" : "and error occured when saving to the database."},500
+            return {"message" : "an error occured when saving to the database."},500
 
         return item.json(),201
 
@@ -59,7 +64,7 @@ class Item(Resource):
 
 
         if item is None :
-            item = ItemModel(name,data['price'])
+            item = ItemModel(name,data['price'],data['store_id'])
         else :
             item.price = data['price']
 

@@ -6,7 +6,7 @@ from flask_restful import Resource,reqparse
 class UserRegister(Resource):
 
     parser = reqparse.RequestParser()
-    parser.add_argument('username',
+    parser.add_argument('name',
     type=str,
     required = True,
     help="this field cannot be blank"
@@ -22,8 +22,8 @@ class UserRegister(Resource):
         """psot request for an user"""
         data = UserRegister.parser.parse_args()
 
-        if  UserModel.find_by_name(data['username']):
-            return {"message":"a user with name {} already exists".format(data['username'])},400 # bad request
+        if  UserModel.find_by_name(data['name']):
+            return {"message":"a user with name {} already exists".format(data['name'])},400 # bad request
 
         try :
             # it's like : UserModel(data['username'],data['password'])
@@ -33,7 +33,7 @@ class UserRegister(Resource):
         except :
             return {"message" : "and error occured when saving to the database."},500
 
-        return item.json(),201
+        return user.json(),201
 
 
     def delete(self,name):
@@ -61,3 +61,10 @@ class UserRegister(Resource):
 
         item.save_to_db()
         return item.json()
+
+
+
+class UserList(Resource):
+    def get(self):
+        """return all of the users in the database"""
+        return {'all_users':[user.json() for user in UserModel.query.all()]}

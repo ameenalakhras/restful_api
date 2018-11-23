@@ -6,8 +6,10 @@ from flask_jwt import JWT, jwt_required
 from security import authenticate,identity
 
 from resources.item import Item,ItemList
-from resources.user import UserRegister
-from models.user import UserModel
+from resources.user import UserRegister,UserList
+from resources.store import Store,StoreList
+# from models.user import UserModel
+
 
 app = Flask(__name__)
 # locating the databse for SQLAlchemy (doesn't have to be sqlite3 it can be any databse)
@@ -28,6 +30,9 @@ jwt = JWT(app,authenticate,identity)
 api.add_resource(Item,"/items/<string:name>")
 api.add_resource(ItemList,"/items")
 api.add_resource(UserRegister,'/register')
+api.add_resource(UserList,'/users')
+api.add_resource(Store,"/store/<string:name>")
+api.add_resource(StoreList,'/stores')
 
 
 if __name__ == "__main__":

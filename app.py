@@ -19,10 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key="amin"
 api = Api(app)
 
-# create all tables(and db) before first request if they don't exist
-@app.before_first_request
-def create_tables():
-    db.create_all()
+
 
 jwt = JWT(app,authenticate,identity)
 

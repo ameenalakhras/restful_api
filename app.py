@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask,request
 from flask_restful import Resource,Api,reqparse
 # to require a function for a key ### for authentication
@@ -13,7 +15,7 @@ from resources.store import Store,StoreList
 
 app = Flask(__name__)
 # locating the databse for SQLAlchemy (doesn't have to be sqlite3 it can be any databse)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db')
 # turning off flask-SQLAlchemy modifications since it's in SQLAlchemy origionally existing
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key="amin"

@@ -1,0 +1,4 @@
+# requirement.txt : for installing the packages required for the project [uwsgi is a package that only runs in heruku]
+# runtime.txt : python version
+# uwsgi.ini : heruku config file
+# Procfile : what to run for the app to start 
